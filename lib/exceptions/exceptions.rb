@@ -33,7 +33,7 @@ module NepaliCalendar
     attr_reader :code
 
     # Public: fallback if there is no response code on the object
-    NOCODE = 0o00
+    NOCODE = 000
 
     # Public: initialization of new error given a message and/or object
     # message  - a String detailing the error

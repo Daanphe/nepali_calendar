@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-
+$:.push File.expand_path("../lib", __FILE__)
 # Maintain your gem's version:
 require 'nepali_calendar/version'
 
