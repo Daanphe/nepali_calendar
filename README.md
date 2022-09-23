@@ -61,11 +61,11 @@ NepaliCalendar::FiscalYear.new(@start_year, @end_year).end_of_year
 ```
 To get Nepali Fiscal year from BS date
 ```ruby
-NepaliCalendar::FiscalYear.new(bs_year, bs_month, bs_day).fiscal_year_for_bs_date
+NepaliCalendar::FiscalYear.fiscal_year_for_bs_date(date_in_bs)
 ```
 To get Nepali Fiscal year from AD date object
 ```ruby
-NepaliCalendar::FiscalYear.new(date).fiscal_year_in_bs_for_ad_date
+NepaliCalendar::FiscalYear.fiscal_year_in_bs_for_ad_date(date_in_ad)
 ```
 To get current Nepali Fiscal year
 ```ruby
