@@ -4,6 +4,7 @@ module NepaliCalendar
   class BsCalendar < NepaliCalendar::Calendar
     MONTHNAMES = %w[nil Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra].freeze
     DAYNAMES = %w[nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar].freeze
+
     class << self
       def ad_to_bs(year, month, day)
         raise NepaliCalendar::Calendar::NilDateFieldsException unless valid_date_input?(year, month, day)
@@ -27,6 +28,20 @@ module NepaliCalendar
         date = Date.today
         ad_to_bs(date.year, date.month, date.day)
       end
+    end
+
+    def date
+      # Convert nepali date to Ad date
+      date = self.to_ad
+
+      # Create new date object with the Ad date
+      date_object = Date.new(date[:year], date[:month], date[:day])
+
+      # Get the week_day name, month name
+      weekday_name = DAYNAMES[date_object.wday + 1]
+      month_name = MONTHNAMES[@month]
+
+      { weekday_name: weekday_name, month_name: month_name, day: @day, month: @month, year: @year }
     end
 
     def beginning_of_week
@@ -145,6 +160,30 @@ module NepaliCalendar
         start_date.beginning_of_month.beginning_of_week,
         start_date.end_of_month.end_of_week
       ]
+    end
+
+    def to_ad
+      if !year || !month || !day
+        raise NilDateFieldsException
+      end
+
+      if !NepaliCalendar::Calendar.valid_date_input?(year, month, day)
+        raise InvalidBSDateException
+      end
+
+      ad_date = NepaliCalendar::Calendar.ref_date['bs_to_ad']['ad']
+      bs_date = NepaliCalendar::Calendar.ref_date['bs_to_ad']['bs']
+
+      total_days = NepaliCalendar::Calendar.total_days_for_bs("#{year}/#{month}/#{day}", bs_date)
+      ad_date = Date.parse(ad_date) + total_days
+      {
+        year: ad_date.year,
+        month: ad_date.month,
+        day: ad_date.day,
+        wday: ad_date.wday,
+        month_name: I18n.t("date.month_names")[ad_date.month],
+        wday_name: I18n.t("date.day_names")[ad_date.wday],
+      }
     end
   end
 end
