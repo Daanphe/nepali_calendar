@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'byebug'
 module NepaliCalendar
   class AdCalendar < NepaliCalendar::Calendar
     class << self

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails'
-require 'byebug'
 require 'exceptions/exceptions'
 
 module NepaliCalendar
